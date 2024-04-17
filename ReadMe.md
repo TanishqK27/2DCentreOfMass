@@ -1,77 +1,79 @@
-# README for ShapePlotter
+# 2DCentreOfMass README
 
-## Overview
+2DCentreOfMass is an interactive tool designed for visualizing and manipulating geometric shapes based on user input. It calculates properties such as the center of mass and area, and allows for rotation based on a specified pinning point.
 
-The `ShapePlotter` class is designed for interactive plotting and manipulation of 2D shapes in a matplotlib plot. Users can create shapes by specifying vertices and then select a vertex to "pin" the shape, simulating how it would hang if suspended from that point. The class calculates the center of mass for the shape, rotates the shape to align the center of mass directly below the pinning point, and provides visual feedback throughout the process.
-Note that this is only for simple polygons. 
+## Tutorial
 
-## How to Use
+### Getting Started
 
-1. **Initialization**: Instantiate a `ShapePlotter` object by specifying the input mode (`'click'` or `'manual'`) and the axis size as a tuple (width, height).
+To begin using 2DCentreOfMass, ensure that you have Python installed, along with the necessary libraries: `matplotlib` and `numpy`.
 
-2. **Shape Creation**: Depending on the input mode, create the shape by clicking on the plot or entering coordinates manually.
+1. **Launch the program**: Run ShapePlotter from your command line:
 
-3. **Pinning Point Selection**: After the shape is created, select a vertex to act as the pinning point. The shape will rotate so that its center of mass aligns vertically below this point.
+    ```bash
+    python CentreOfMass.py
+    ```
 
-4. **Visualization**: The plot displays the shape, its center of mass, and the pinning point, updating in real time as the shape is manipulated.
+2. **Input mode selection**: Choose between 'click' or 'manual' input modes.
+   - **Click mode**: Use your mouse to click on the plot area to define the vertices of your shape. Right-click to close the shape and left-click to select the pinning point.
+   - **Manual mode**: Enter coordinates of vertices directly through the console. Type 'done' to close the shape.
 
-## Functions and Their Roles
+### Creating a Shape
 
-### `__init__(self, input_mode, axis_size)`
-Initializes the `ShapePlotter` instance. Sets up the plot and connects event handlers if the input mode is `'click'`.
+- **Add vertices**: Depending on the chosen input mode, add vertices by clicking on the plot area or entering coordinates in the format `x,y`.
+- **Close the shape**: Right-click on the plot or type 'done' to finish the shape definition.
+- **Select a pinning point**: Click on a vertex to set it as the pinning point for rotation.
 
-- `input_mode`: Determines how the user inputs the shape (`'click'` or `'manual'`).
-- `axis_size`: Defines the size of the plotting area.
+## How To
 
-### `add_vertex(self, point)`
-Adds a vertex to the shape and updates the plot.
+### Setting Up the Environment
 
-- Prints the coordinates of the added point.
-- Closes the shape if the added point completes it.
+1. **Install Python**: Download and install Python from [python.org](https://www.python.org/).
+2. **Install required libraries**: Use pip to install Matplotlib and NumPy.
 
-### `close_shape(self)`
-Closes the shape by connecting the last and first vertices and calculates the center of mass.
+    ```bash
+    pip install matplotlib numpy
+    ```
 
-- Invokes the center of mass calculation.
-- Displays the center of mass on the plot.
+### Running the Library
 
-### `update_polygon(self)`
-Updates the plot with the current vertices of the shape.
+Navigate to the directory containing `shapeplotter.py` and run:
 
-- Redraws the shape with any new vertices added.
+```bash
+python CentreOfMass.py
+```
+## Examples
 
-### `calculate_center_of_mass(self)`
-Calculates and displays the center of mass for the shape using the polygon's vertex coordinates.
+### Creating a Triangle
 
-- Utilizes the formula for the centroid of a polygon based on its vertices.
-- Prints and plots the center of mass.
+- Use either **Click Mode** or **Manual Mode** in order to create a triangle.
+- Click around any vertex to choose a **pinning point**. 
+- You will see the shape rotate as it would under gravity. 
 
-### `select_pinning_point(self, point)`
-Selects the closest vertex to a given point as the pinning point and initiates rotation.
+### Creating a Rectangle
 
-- Determines the closest vertex to the user-selected point.
-- Prints the coordinates of the chosen pinning point.
+- Follow similar steps as for the triangle, but with four points.
 
-### `rotate_shape(self)`
-Rotates the shape so that the center of mass is vertically aligned below the pinning point.
+### Functions and Their Parameters
 
-- Calculates the necessary rotation angle.
-- Applies the rotation to all vertices and the center of mass.
-- Updates the plot with the rotated shape.
+- `add_vertex(vertex)`: Adds a vertex to the current shape. `vertex` should be a tuple `(x, y)`.
+- `close_shape()`: Closes the shape by connecting the last vertex to the first and calculates geometric properties.
+- `calculate_center_of_mass()`: Calculates the center of mass for the defined shape.
+- `select_pinning_point(point)`: Selects a pinning point for rotation. `point` is a tuple `(x, y)`.
+- `rotate_shape()`: Rotates the shape around the selected pinning point to align the center of mass beneath it.
+- `rotate_point(point, angle, origin)`: Rotates a point around the given origin by the specified angle.
 
-### `rotate_point(self, point, angle, origin)`
-Rotates a point around a given origin by a specified angle.
+## Explanation
 
-- Used to rotate each vertex and the center of mass during the shape rotation.
+### Underlying Mathematics and Algorithms
 
-## Mathematical Concepts
+- **Center of Mass**: The center of mass is computed using the formula for polygons, which involves summing over the vertices and dividing by the total area.
+- **Area Calculation**: The area of the polygon is calculated using the shoelace formula (Gauss's area formula), which is efficient for computing the area of a polygon given its vertices.
+- **Rotation**: Rotation is handled through transformation matrices that rotate points around a given pin by a calculated angle based on the position of the center of mass relative to the pinning point.
 
-- **Center of Mass**: Calculated using the formula for the centroid of a polygon, which involves the coordinates of the vertices.
-- **Rotation**: Achieved by applying a rotation matrix to each vertex and the center of mass, ensuring the shape rotates as a rigid body.
-- **Pinning Point Selection**: Involves determining the closest vertex to a user-selected point, which becomes the point of suspension.
+The algorithms are designed to handle general polygons and perform calculations in real-time to update the visualizations dynamically.
 
-## Usage Example
-
-```python
-plotter = ShapePlotter(input_mode='click', axis_size=(10, 10))
-plotter.show()
+If you would like to read more about the underlying mathematics, look at the paper written, in the directory as 
+```bash
+main.pdf
+```
