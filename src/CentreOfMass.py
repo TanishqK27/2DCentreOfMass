@@ -1,16 +1,7 @@
 
 import matplotlib
-
 matplotlib.use('Qt5Agg')
-
 import logging
-
-import matplotlib.pyplot as plt
-import matplotlib.patches as patches
-import numpy as np
-import sympy as sp
-
-
 import matplotlib.pyplot as plt
 import numpy as np
 
@@ -27,7 +18,7 @@ class Geometry:
         """
         Calculate the center of mass and area of a polygon given its vertices.
 
-        Args:
+        Arguments required:
         vertices (list of tuples): List of (x, y) coordinates for the vertices of the polygon.
 
         Returns:
@@ -46,7 +37,7 @@ class Geometry:
         """
         Rotate a point around a given origin by an angle.
 
-        Args:
+        Arguments:
         point (tuple): The point to rotate (x, y).
         angle (float): The angle in radians to rotate.
         origin (tuple): The origin point to rotate around (x, y).

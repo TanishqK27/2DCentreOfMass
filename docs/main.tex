@@ -1,15 +1,93 @@
-%! Author = tanishqkumar
-%! Date = 17/04/2024
+\documentclass{article}
+\usepackage{graphicx}
+\usepackage[margin=2.5cm, includefoot, footskip=30pt]{geometry}
+\usepackage{subcaption}
+\usepackage{caption}
+\usepackage{hyperref}
+\hypersetup{
+    colorlinks=true,
+    linkcolor=black,
+    urlcolor=blue,
+    citecolor=black
+}
 
-% Preamble
-\documentclass[11pt]{article}
 
-% Packages
-\usepackage{amsmath}
+\title{2DCentreOfMass: A Python library for the computation of the centre of gravity of a polygon}
 
-% Document
+\author{Maxime Bell, Marcel Głuszak and Tanishq Kumar}
+\date{26-04-2024}
+
 \begin{document}
 
+\maketitle
 
+\begin{abstract}
+    The 2DCentreOfMass library is a Python-based software tool designed to solve geometrical problems focusing on calculations related to the centre of mass in two-dimensional spaces. This tool supports interactive user manipulation as well as the computation of geometric properties of user-defined shapes. 
+\end{abstract}
+
+\section{Summary}
+The centre of gravity, also known as the centre of mass or centroid, refers to the point within an object where the entire mass of the object is concentrated. That is to say, the centre of gravity is the point at which an object would balance perfectly if supported at that point.\\
+Several examples of when the centre of mass is useful include:
+
+\begin{itemize}
+    \item Predicting rotational movement;
+    \item Simplifying complex systems and applying Newton's laws of motion;
+    \item Geometric proofs such as the centroid theorem.
+\end{itemize}
+
+The centroid of a polygon is calculated using the following formulae:
+
+\[
+C_x = \frac{1}{6A} \sum_{i=0}^{n-1} (x_i + x_{i+1})(x_i y_{i+1} - x_{i+1} y_i),
+\]
+
+\[
+C_y = \frac{1}{6A} \sum_{i=0}^{n-1} (y_i + y_{i+1})(x_i y_{i+1} - x_{i+1} y_i).
+\]
+
+Where \(A\) is the area of the polygon calculated by the following:
+
+\[
+A = \frac{1}{2} \sum_{i=0}^{n-1} (x_i y_{i+1} - x_{i+1} y_i),
+\]
+ and
+\(
+(x_0,y_0), 
+(x_1, y_1), 
+\ldots, 
+(x_i,y_i), 
+\ldots,
+(x_{n-1},y_{n-1})\) are the coordinates of the polygon's vertices. We also define \((x_0, y_0) = (x_n,y_n)\) so that the polygon is closed. \(C_x\) and \(C_y\) represent the \(x\) and \(y\) coordinates of the centroid respectively. A useful resource to learn more about centroids, including the centroid of a three-dimensional shell is ~\cite{bourke1988calculating}.\\
+The 2DCentreOfMass library makes using these formulae much faster. Once launched from the command line, the user must choose an input mode and axis size. They can then input in any amount of vertices by plugging in their coordinates, so long as the shape does not intersect with itself, as seen in Figure~\ref{shape_not_rotated}.
+
+\section{Statement of Need}
+Although finding the centre of mass of simple polygons (such as squares and triangles) may be straightforward, this process becomes complex and time-consuming when more vertices are added. For this reason, the use of software is required when computing the centre of gravity of more complex polygons.\\
+One piece of software that can do this is Shapely~\cite{ShapelyDocumentation2-0-4}. Shapely is a BSD-Licensed Python package designed for the manipulation and analysis of two-dimensional geometric objects on a flat plane. In the field of geospatial analysis, Shapely is widely recognised as a powerful tool for computational geometry involving centroids. Please see~\cite{westra2010python} for more information on geospatial development using Python. However, a limitation of this software is that the user cannot see the polygon they input in real time. Moreover, the function that finds the centroid only returns the coordinates of the centroid and does not visualise where it would lie in the shape. Shapely also requires the user to have good knowledge of other coding languages, since it is built off of~\href{https://libgeos.org/}{GEOS} which is a C/C++ library. \\
+2DCentreOfMass is a Python library specifically created to solve geometrical problems related to the centre of mass of polygons. It provides a dynamic graph that updates in real time as vertices are added, thus allowing the user to have a better understanding of the resulting polygon and its centroid.\\
+Finally, the ability to 'pin' a vertex provides a practical way to demonstrate the relationship between the chosen vertex and centroid under the effect of gravity, as seen in Figure~\ref{shape_not_rotated} and~\ref{shape_rotated}.
+
+\begin{figure}
+\centering
+\begin{subfigure}{.5\textwidth}
+    \centering
+    \includegraphics[width=0.5\textwidth]{Shape_Not_Rotated.png}
+    \caption{The polygon before being pinned.}
+    \label{shape_not_rotated}
+\end{subfigure}%
+\begin{subfigure}{.5\textwidth}
+    \centering
+    \includegraphics[width=0.5\textwidth]{Shape_Rotated.png}
+    \caption{The polygon after being pinned.}
+    \label{shape_rotated}
+\end{subfigure}
+\end{figure}
+
+\section{Conclusion}
+This paper has given a brief description and explanation of the 2DCentreOfMass Python library, the mathematics behind it, and background information to justify the need for such a library.\\
+The current limitations, however, provide the opportunity to further develop the program's ability in the future. This could involve expanding it into the third dimension, in addition to incorporating the ability to input and find the centre of mass of shapes which have varying density throughout.\\
+The source code can be accessed~\href{https://github.com/TanishqK27/2DCentreOfMass/blob/master/src/CentreOfMass.py}{here}.
+
+\bibliographystyle{plain}
+\bibliography{bibliography.bib} 
 
 \end{document}
